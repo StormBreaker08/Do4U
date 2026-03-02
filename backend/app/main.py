@@ -33,7 +33,12 @@ app.mount("/uploads", StaticFiles(directory=str(uploads_root)), name="uploads")
 # Setup CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Configure appropriately for production
+    allow_origins=[
+        "https://do4u.vercel.app",
+        "https://do4u-git-main-stormbreaker08s-projects.vercel.app",
+        "http://localhost:5173",
+        "http://localhost:3000",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

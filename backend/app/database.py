@@ -22,18 +22,24 @@ if "pooler.supabase.com:6543" in db_url:
     db_url = db_url.replace("pooler.supabase.com:6543", "pooler.supabase.com:5432")
 
 # Create async engine
+# Increased timeouts for Render's PostgreSQL connection stability
 engine = create_async_engine(
     db_url,
     echo=settings.DEBUG,
     future=True,
     pool_pre_ping=True,
-    pool_size=5,
-    max_overflow=10,
-    pool_timeout=30,
+    pool_size=3,  # Reduced from 5 for Render's limited resources
+    max_overflow=5,  # Reduced from 10
+    pool_timeout=60,  # Increased from 30 to 60 seconds
     pool_recycle=300,
     connect_args={
-        "timeout": 30,
+        "timeout": 60,  # Increased from 30 to 60 seconds for connection establishment
         "statement_cache_size": 0,  # Disable asyncpg prepared-statement cache
+        "command_timeout": 60,  # Command timeout for queries
+        "server_settings": {
+            "application_name": "do4u-backend",
+            "jit": "off"  # Disable JIT compilation for faster query planning
+        }
     },
 )
 

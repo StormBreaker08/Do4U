@@ -6,6 +6,7 @@ from fastapi.staticfiles import StaticFiles
 from contextlib import asynccontextmanager
 import logging
 from pathlib import Path
+import asyncio
 
 from app.database import init_db
 from app.routes import jobs, offers, wallet, admin, users, notifications, chat, location
@@ -113,6 +114,19 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
 @app.exception_handler(Exception)
 async def general_exception_handler(request: Request, exc: Exception):
     """Handle unexpected exceptions"""
+    # Check if it's a timeout error (database connection timeout)
+    if isinstance(exc, (asyncio.TimeoutError, TimeoutError)):
+        logging.error(f"Database connection timeout: {exc}", exc_info=True)
+        return JSONResponse(
+            status_code=503,
+            headers=_cors_headers(request),
+            content={
+                "error": True,
+                "message": "Database connection timeout. Please try again.",
+                "type": "TimeoutError"
+            }
+        )
+    
     logging.error(f"Unexpected error: {exc}", exc_info=True)
     return JSONResponse(
         status_code=500,
@@ -142,5 +156,28 @@ async def root():
 
 @app.get("/health")
 async def health_check():
-    return {"status": "healthy"}
+    """Health check endpoint - tests database connectivity"""
+    from app.database import AsyncSessionLocal
+    from sqlalchemy import text
+    
+    try:
+        # Try to get a database session and run a simple query
+        async with AsyncSessionLocal() as session:
+            await session.execute(text("SELECT 1"))
+        return {
+            "status": "healthy",
+            "database": "connected"
+        }
+    except asyncio.TimeoutError:
+        return {
+            "status": "degraded",
+            "database": "timeout",
+            "message": "Database connection timeout"
+        }
+    except Exception as e:
+        return {
+            "status": "unhealthy",
+            "database": "disconnected",
+            "error": str(e)
+        }
 

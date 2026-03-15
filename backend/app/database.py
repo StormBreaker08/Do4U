@@ -22,24 +22,28 @@ if "pooler.supabase.com:6543" in db_url:
     db_url = db_url.replace("pooler.supabase.com:6543", "pooler.supabase.com:5432")
 
 # Create async engine
-# Increased timeouts for Render's PostgreSQL connection stability
+# Configuration tuned for Render's Supabase connection reliability
 engine = create_async_engine(
     db_url,
     echo=settings.DEBUG,
     future=True,
-    pool_pre_ping=True,
-    pool_size=3,  # Reduced from 5 for Render's limited resources
-    max_overflow=5,  # Reduced from 10
-    pool_timeout=60,  # Increased from 30 to 60 seconds
+    pool_pre_ping=False,  # DISABLED: was causing timeouts on pool initialization
+    pool_size=2,  # Further reduced for Render's constraints
+    max_overflow=2,  # Minimal overflow
+    pool_timeout=120,  # Increased to 120 seconds
     pool_recycle=300,
     connect_args={
-        "timeout": 60,  # Increased from 30 to 60 seconds for connection establishment
-        "statement_cache_size": 0,  # Disable asyncpg prepared-statement cache
-        "command_timeout": 60,  # Command timeout for queries
+        "timeout": 120,  # 120 seconds for connection establishment
+        "statement_cache_size": 0,  # Disable prepared statements to avoid PgBouncer issues
+        "command_timeout": 120,  # Extended command timeout
         "server_settings": {
             "application_name": "do4u-backend",
-            "jit": "off"  # Disable JIT compilation for faster query planning
-        }
+            "jit": "off",
+            "tcp_keepalives_idle": 30,  # Keep TCP connection alive
+            "tcp_keepalives_interval": 10,
+            "tcp_keepalives_count": 5
+        },
+        "ssl": "prefer"  # Use SSL but don't fail if unavailable
     },
 )
 

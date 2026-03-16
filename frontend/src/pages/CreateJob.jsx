@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { api } from "../services/api";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+import TipsSection from "../components/TipsSection";
 import ButtonSpinner from "../components/ButtonSpinner";
 
 export default function CreateJob() {
@@ -257,6 +259,38 @@ export default function CreateJob() {
             </div>
           </form>
         </div>
+
+        <TipsSection
+          title="💡 Tips for Getting Great Responses"
+          tips={[
+            {
+              icon: "📝",
+              title: "Be Clear & Specific",
+              description:
+                "Include details about what needs to be done, not just general descriptions",
+            },
+            {
+              icon: "💰",
+              title: "Set Fair Budget",
+              description:
+                "Research similar jobs to set competitive pricing and attract quality Genies",
+            },
+            {
+              icon: "📍",
+              title: "Mention Location",
+              description:
+                "Specify location for on-site work, or mark as remote/online for flexibility",
+            },
+            {
+              icon: "🎯",
+              title: "Define Timeline",
+              description:
+                "Mention when you need it done to help Genies assess if they can commit",
+            },
+          ]}
+        />
+
+        <Footer />
       </main>
 
       {toast && <div className="toast">{toast}</div>}

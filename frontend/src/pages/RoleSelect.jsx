@@ -1,6 +1,7 @@
 import { useNavigate, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import AnimatedChat from "../components/AnimatedChat";
+import Footer from "../components/Footer";
 import logo from "../assets/your-logo.png";
 
 export default function RoleSelect() {
@@ -13,42 +14,48 @@ export default function RoleSelect() {
   const testimonials = [
     {
       rating: "⭐⭐⭐⭐⭐",
-      quote: "I posted a 'please save my moving day' task and had two Genies show up with a van in under an hour. Absolute lifesaver!",
+      quote:
+        "I posted a 'please save my moving day' task and had two Genies show up with a van in under an hour. Absolute lifesaver!",
       avatar: "jess",
       author: "Jess, new in town",
       color: "pink",
     },
     {
       rating: "⭐⭐⭐⭐⭐",
-      quote: "I run errands between classes. It's flexible, fast, and the wallet makes payouts painless.",
+      quote:
+        "I run errands between classes. It's flexible, fast, and the wallet makes payouts painless.",
       avatar: "amir",
       author: "Amir, student & Genie",
       color: "yellow",
     },
     {
       rating: "⭐⭐⭐⭐⭐",
-      quote: "Found my go-to handyman through Do4U. Fixed my fence, hung shelves, and assembled furniture. Now I just text him directly through the app!",
+      quote:
+        "Found my go-to handyman through Do4U. Fixed my fence, hung shelves, and assembled furniture. Now I just text him directly through the app!",
       avatar: "maria",
       author: "Maria, homeowner",
       color: "blue",
     },
     {
       rating: "⭐⭐⭐⭐⭐",
-      quote: "The escrow system is genius. I don't worry about getting paid anymore. Job done = instant release. Simple.",
+      quote:
+        "The escrow system is genius. I don't worry about getting paid anymore. Job done = instant release. Simple.",
       avatar: "carlos",
       author: "Carlos, delivery Genie",
       color: "orange",
     },
     {
       rating: "⭐⭐⭐⭐⭐",
-      quote: "Needed groceries picked up while stuck at work. Posted at 3pm, had them delivered by 4pm. This app is magic.",
+      quote:
+        "Needed groceries picked up while stuck at work. Posted at 3pm, had them delivered by 4pm. This app is magic.",
       avatar: "priya",
       author: "Priya, busy professional",
       color: "pink",
     },
     {
       rating: "⭐⭐⭐⭐⭐",
-      quote: "Made $400 last weekend doing yard cleanups. Love that I can choose which jobs to take and see ratings before accepting.",
+      quote:
+        "Made $400 last weekend doing yard cleanups. Love that I can choose which jobs to take and see ratings before accepting.",
       avatar: "jake",
       author: "Jake, weekend Genie",
       color: "blue",
@@ -76,7 +83,9 @@ export default function RoleSelect() {
     if (isLeftSwipe) {
       setCarouselIndex((prev) => (prev + 1) % testimonials.length);
     } else if (isRightSwipe) {
-      setCarouselIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+      setCarouselIndex(
+        (prev) => (prev - 1 + testimonials.length) % testimonials.length,
+      );
     }
   };
 
@@ -85,7 +94,9 @@ export default function RoleSelect() {
   };
 
   const prevSlide = () => {
-    setCarouselIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+    setCarouselIndex(
+      (prev) => (prev - 1 + testimonials.length) % testimonials.length,
+    );
   };
 
   const goToSlide = (index) => {
@@ -95,18 +106,18 @@ export default function RoleSelect() {
   useEffect(() => {
     const handleScroll = () => {
       setShowScrollTop(window.scrollY > 300);
-      
+
       // Parallax effect for hero section
-      const heroCopy = document.querySelector('.landing__hero-copy');
-      const heroDevice = document.querySelector('.landing__hero-device');
-      
+      const heroCopy = document.querySelector(".landing__hero-copy");
+      const heroDevice = document.querySelector(".landing__hero-device");
+
       if (heroCopy || heroDevice) {
         const scrollY = window.scrollY;
         // Apply parallax only when viewing hero section (roughly top 800px)
         if (scrollY < 800) {
           const parallaxSpeed = 0.5;
           const offset = scrollY * parallaxSpeed;
-          
+
           if (heroCopy) {
             heroCopy.style.transform = `translateY(${offset * 0.3}px)`;
           }
@@ -125,20 +136,20 @@ export default function RoleSelect() {
   useEffect(() => {
     const observerOptions = {
       threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
+      rootMargin: "0px 0px -50px 0px",
     };
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          entry.target.classList.add('animated');
+          entry.target.classList.add("animated");
           observer.unobserve(entry.target);
         }
       });
     }, observerOptions);
 
     const elementsToAnimate = document.querySelectorAll(
-      '.landing__hero-copy, .landing__hero-device, .landing__flow-card, .landing__card, .landing__story-card, .landing__marquee, .landing__cta-inner'
+      ".landing__hero-copy, .landing__hero-device, .landing__flow-card, .landing__card, .landing__story-card, .landing__marquee, .landing__cta-inner",
     );
 
     elementsToAnimate.forEach((el) => {
@@ -335,10 +346,28 @@ export default function RoleSelect() {
             <div className="landing__card-grid">
               <article className="landing__card">
                 <div className="landing__card-icon">
-                  <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="24" cy="24" r="20" stroke="currentColor" strokeWidth="2"/>
-                    <circle cx="24" cy="24" r="13" stroke="currentColor" strokeWidth="2"/>
-                    <circle cx="24" cy="24" r="6" fill="currentColor"/>
+                  <svg
+                    width="48"
+                    height="48"
+                    viewBox="0 0 48 48"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <circle
+                      cx="24"
+                      cy="24"
+                      r="20"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    />
+                    <circle
+                      cx="24"
+                      cy="24"
+                      r="13"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    />
+                    <circle cx="24" cy="24" r="6" fill="currentColor" />
                   </svg>
                 </div>
                 <h3 className="landing__card-title">Your Chaos, Solved</h3>
@@ -351,9 +380,22 @@ export default function RoleSelect() {
 
               <article className="landing__card">
                 <div className="landing__card-icon">
-                  <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M24 4L28 16H40L30 22L34 34L24 28L14 34L18 22L8 16H20L24 4Z" fill="currentColor"/>
-                    <path d="M32 20L36 30L28 25L20 30L24 20" fill="currentColor" opacity="0.5"/>
+                  <svg
+                    width="48"
+                    height="48"
+                    viewBox="0 0 48 48"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M24 4L28 16H40L30 22L34 34L24 28L14 34L18 22L8 16H20L24 4Z"
+                      fill="currentColor"
+                    />
+                    <path
+                      d="M32 20L36 30L28 25L20 30L24 20"
+                      fill="currentColor"
+                      opacity="0.5"
+                    />
                   </svg>
                 </div>
                 <h3 className="landing__card-title">Smart Matching</h3>
@@ -366,9 +408,25 @@ export default function RoleSelect() {
 
               <article className="landing__card">
                 <div className="landing__card-icon">
-                  <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M8 24C8 16.27 13.2 9.74 20 7.5V8C20 10.2 21.8 12 24 12C26.2 12 28 10.2 28 8V7.5C34.8 9.74 40 16.27 40 24C40 33.94 32.06 42 24 42C15.94 42 8 33.94 8 24Z" fill="currentColor"/>
-                    <rect x="20" y="18" width="8" height="10" rx="1" fill="var(--bg)"/>
+                  <svg
+                    width="48"
+                    height="48"
+                    viewBox="0 0 48 48"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M8 24C8 16.27 13.2 9.74 20 7.5V8C20 10.2 21.8 12 24 12C26.2 12 28 10.2 28 8V7.5C34.8 9.74 40 16.27 40 24C40 33.94 32.06 42 24 42C15.94 42 8 33.94 8 24Z"
+                      fill="currentColor"
+                    />
+                    <rect
+                      x="20"
+                      y="18"
+                      width="8"
+                      height="10"
+                      rx="1"
+                      fill="var(--bg)"
+                    />
                   </svg>
                 </div>
                 <h3 className="landing__card-title">Clear Communication</h3>
@@ -426,30 +484,35 @@ export default function RoleSelect() {
               <h2 className="landing__stories-title">
                 What Do4U fans are saying
               </h2>
-              
+
               {/* Carousel Container */}
               <div className="landing__carousel-container">
-                <div 
+                <div
                   className="landing__stories-grid landing__carousel"
                   onTouchStart={handleTouchStart}
                   onTouchEnd={handleTouchEnd}
                 >
                   {testimonials.map((testimonial, index) => (
-                    <figure 
+                    <figure
                       key={index}
                       className={`landing__story-card landing__story-card--${testimonial.color} landing__carousel-slide ${
-                        index === carouselIndex ? 'active' : ''
+                        index === carouselIndex ? "active" : ""
                       }`}
                       style={{
                         transform: `translateX(calc(-${carouselIndex * 100}% + ${carouselIndex * 24}px))`,
                       }}
                     >
-                      <div className="landing__story-rating">{testimonial.rating}</div>
+                      <div className="landing__story-rating">
+                        {testimonial.rating}
+                      </div>
                       <blockquote className="landing__story-quote">
                         &quot;{testimonial.quote}&quot;
                       </blockquote>
                       <figcaption className="landing__story-author">
-                        <div className="landing__story-avatar" data-avatar={testimonial.avatar}>
+                        <div
+                          className="landing__story-avatar"
+                          data-avatar={testimonial.avatar}
+                        >
                           {testimonial.avatar.charAt(0).toUpperCase()}
                         </div>
                         <span>— {testimonial.author}</span>
@@ -460,7 +523,7 @@ export default function RoleSelect() {
 
                 {/* Desktop Navigation - Arrows */}
                 <div className="landing__carousel-nav">
-                  <button 
+                  <button
                     className="landing__carousel-btn landing__carousel-btn--prev"
                     onClick={prevSlide}
                     aria-label="Previous testimonial"
@@ -468,7 +531,7 @@ export default function RoleSelect() {
                   >
                     ←
                   </button>
-                  <button 
+                  <button
                     className="landing__carousel-btn landing__carousel-btn--next"
                     onClick={nextSlide}
                     aria-label="Next testimonial"
@@ -483,7 +546,7 @@ export default function RoleSelect() {
                   {testimonials.map((_, index) => (
                     <button
                       key={index}
-                      className={`landing__carousel-dot ${index === carouselIndex ? 'active' : ''}`}
+                      className={`landing__carousel-dot ${index === carouselIndex ? "active" : ""}`}
                       onClick={() => goToSlide(index)}
                       aria-label={`Go to testimonial ${index + 1}`}
                       title={`Slide ${index + 1}`}
@@ -522,152 +585,7 @@ export default function RoleSelect() {
           </section>
 
           {/* Footer */}
-          <footer className="landing__footer">
-            <div className="landing__footer-grid">
-              <div className="landing__footer-section">
-                <h3 className="landing__footer-heading">DO4U</h3>
-                <p className="landing__footer-tagline">
-                  The community platform for people who want real-world help,
-                  fast.
-                </p>
-                <div className="landing__footer-social">
-                  <a
-                    href="https://github.com/do4u"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="landing__footer-social-link"
-                  >
-                    <svg
-                      width="24"
-                      height="24"
-                      fill="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-                    </svg>
-                  </a>
-                  <a
-                    href="https://twitter.com/do4u"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="landing__footer-social-link"
-                  >
-                    <svg
-                      width="24"
-                      height="24"
-                      fill="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                    </svg>
-                  </a>
-                  <a
-                    href="https://linkedin.com/company/do4u"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="landing__footer-social-link"
-                  >
-                    <svg
-                      width="24"
-                      height="24"
-                      fill="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-                    </svg>
-                  </a>
-                  <a
-                    href="https://instagram.com/do4u"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="landing__footer-social-link"
-                  >
-                    <svg
-                      width="24"
-                      height="24"
-                      fill="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z" />
-                    </svg>
-                  </a>
-                </div>
-              </div>
-
-              <div className="landing__footer-section">
-                <h3 className="landing__footer-heading">Quick Links</h3>
-                <div className="landing__footer-links">
-                  <a href="#home" className="landing__footer-link">
-                    Home
-                  </a>
-                  <a href="#how-it-works" className="landing__footer-link">
-                    How it Works
-                  </a>
-                  <a href="#stories" className="landing__footer-link">
-                    Stories
-                  </a>
-                  <Link to="/login" className="landing__footer-link">
-                    Sign in
-                  </Link>
-                </div>
-              </div>
-
-              <div className="landing__footer-section">
-                <h3 className="landing__footer-heading">Get Started</h3>
-                <div className="landing__footer-links">
-                  <Link to="/login?role=user" className="landing__footer-link">
-                    Post a Task
-                  </Link>
-                  <Link to="/login?role=genie" className="landing__footer-link">
-                    Become a Genie
-                  </Link>
-                  <Link to="/register" className="landing__footer-link">
-                    Create Account
-                  </Link>
-                </div>
-              </div>
-
-              <div className="landing__footer-section">
-                <h3 className="landing__footer-heading">Contact Us</h3>
-                <div className="landing__footer-contact">
-                  <p className="landing__footer-contact-item">
-                    <strong>📧 Email:</strong>
-                    <br />
-                    <a
-                      href="mailto:hello@do4u.app"
-                      className="landing__footer-link"
-                    >
-                      hello@do4u.app
-                    </a>
-                  </p>
-                  <p className="landing__footer-contact-item">
-                    <strong>📞 Phone:</strong>
-                    <br />
-                    <a href="tel:+15551234567" className="landing__footer-link">
-                      +1 (555) 123-4567
-                    </a>
-                  </p>
-                  <p className="landing__footer-contact-item">
-                    <strong>📍 Location:</strong>
-                    <br />
-                    San Francisco, CA
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="landing__footer-bottom">
-              <p>&copy; 2026 Do4U. All rights reserved.</p>
-              <div className="landing__footer-bottom-links">
-                <a href="#privacy" className="landing__footer-link">
-                  Privacy Policy
-                </a>
-                <a href="#terms" className="landing__footer-link">
-                  Terms of Service
-                </a>
-              </div>
-            </div>
-          </footer>
+          <Footer />
         </main>
       </div>
 

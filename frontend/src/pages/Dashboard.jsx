@@ -6,6 +6,9 @@ import Navbar from "../components/Navbar";
 import JobCard from "../components/JobCard";
 import Loader from "../components/Loader";
 import EmptyState from "../components/EmptyState";
+import StatsSection from "../components/StatsSection";
+import TipsSection from "../components/TipsSection";
+import Footer from "../components/Footer";
 
 const STATUS_FILTERS = [
   "ALL",
@@ -123,6 +126,27 @@ export default function Dashboard() {
           ))}
         </div>
 
+        {/* Stats Section */}
+        <StatsSection
+          stats={[
+            {
+              label: "Total Posted",
+              value: jobs.filter((j) => j.status === "POSTED").length,
+              sub: "Awaiting genies",
+            },
+            {
+              label: "Active Jobs",
+              value: jobs.filter((j) => j.status === "IN_PROGRESS").length,
+              sub: "In progress",
+            },
+            {
+              label: "Completed",
+              value: jobs.filter((j) => j.status === "COMPLETED").length,
+              sub: "All finished",
+            },
+          ]}
+        />
+
         {/* Content */}
         {loading ? (
           <div className="job-grid">
@@ -162,6 +186,37 @@ export default function Dashboard() {
             }
           />
         )}
+
+        {/* Tips Section */}
+        <TipsSection
+          title="💡 Tips for Success"
+          tips={[
+            {
+              icon: "📝",
+              title: "Be Specific",
+              description:
+                "Detailed descriptions get better responses from Genies faster",
+            },
+            {
+              icon: "💰",
+              title: "Fair Pricing",
+              description:
+                "Set competitive budgets to attract quality Genies quickly",
+            },
+            {
+              icon: "⏱️",
+              title: "Quick Response",
+              description:
+                "Reply to Genie offers within 2 hours for better acceptance rates",
+            },
+            {
+              icon: "⭐",
+              title: "Leave Ratings",
+              description:
+                "Help the community by rating completed jobs accurately",
+            },
+          ]}
+        />
 
         {/* Mobile Bottom Navigation */}
         <nav className="mobile-nav">
@@ -210,15 +265,14 @@ export default function Dashboard() {
               <span className="mobile-nav__icon">✅</span>
               <span className="mobile-nav__label">Done</span>
             </a>
-            <Link
-              to="/create-job"
-              className="mobile-nav__item"
-            >
+            <Link to="/create-job" className="mobile-nav__item">
               <span className="mobile-nav__icon">➕</span>
               <span className="mobile-nav__label">New</span>
             </Link>
           </div>
         </nav>
+        {/* Footer */}
+        <Footer />
       </main>
 
       {toast && <div className="toast">{toast}</div>}

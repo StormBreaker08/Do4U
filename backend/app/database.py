@@ -7,22 +7,11 @@ from app.core.config import settings
 
 logger = logging.getLogger(__name__)
 
-# ─── Database URL ────────────────────────────────────────────────────────────
-# Supabase exposes two pooler ports:
-#   :5432 — session pooler   (Supavisor session mode)  — supports prepared stmts
-#   :6543 — transaction pooler (Supavisor transaction mode) — does NOT support
-#           asyncpg prepared statements → causes DuplicatePreparedStatementError
-#
-# We MUST stay on port 5432. Switching to 6543 causes 500s on every DB call
-# because pool_pre_ping fires `select pg_catalog.version()` as a prepared
-# statement which PgBouncer in transaction mode cannot handle.
 db_url = settings.DATABASE_URL
 # Safety: if someone set 6543 explicitly, revert to 5432
 if "pooler.supabase.com:6543" in db_url:
     db_url = db_url.replace("pooler.supabase.com:6543", "pooler.supabase.com:5432")
 
-# Create async engine
-# Configuration tuned for Render's Supabase connection reliability
 engine = create_async_engine(
     db_url,
     echo=settings.DEBUG,
@@ -39,9 +28,9 @@ engine = create_async_engine(
         "server_settings": {
             "application_name": "do4u-backend",
             "jit": "off",
-            "tcp_keepalives_idle": 30,  # Keep TCP connection alive
-            "tcp_keepalives_interval": 10,
-            "tcp_keepalives_count": 5
+            "tcp_keepalives_idle": "30",  # Keep TCP connection alive
+            "tcp_keepalives_interval": "10",
+            "tcp_keepalives_count": "5"
         },
         "ssl": "prefer"  # Use SSL but don't fail if unavailable
     },

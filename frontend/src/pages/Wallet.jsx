@@ -2,6 +2,9 @@ import { useState, useEffect } from "react";
 import { api } from "../services/api";
 import { useAuth } from "../hooks/useAuth";
 import Navbar from "../components/Navbar";
+import StatsSection from "../components/StatsSection";
+import TipsSection from "../components/TipsSection";
+import Footer from "../components/Footer";
 import Loader from "../components/Loader";
 import ButtonSpinner from "../components/ButtonSpinner";
 
@@ -192,6 +195,38 @@ export default function Wallet() {
             </div>
           </>
         )}
+
+        <TipsSection
+          title="💡 Tips for Managing Your Wallet"
+          tips={[
+            {
+              icon: "🏦",
+              title: "Keep Funds Available",
+              description:
+                "Maintain a balance for quick job opportunities without waiting for deposits",
+            },
+            {
+              icon: "⏱️",
+              title: "Check Escrow Balance",
+              description:
+                "Funds in escrow are locked until jobs complete — plan your spending accordingly",
+            },
+            {
+              icon: "💰",
+              title: "Withdrawal Timing",
+              description:
+                "Process withdrawals early in the week for faster processing and availability",
+            },
+            {
+              icon: "🎁",
+              title: "Use Reward Points",
+              description:
+                "Accumulate and redeem reward points for discounts on future transactions",
+            },
+          ]}
+        />
+
+        <Footer />
       </main>
 
       {toast && <div className="toast">{toast}</div>}

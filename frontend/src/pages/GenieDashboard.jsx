@@ -6,6 +6,9 @@ import JobCard from "../components/JobCard";
 import Loader from "../components/Loader";
 import EmptyState from "../components/EmptyState";
 import RatingModal from "../components/RatingModal";
+import StatsSection from "../components/StatsSection";
+import TipsSection from "../components/TipsSection";
+import Footer from "../components/Footer";
 import ButtonSpinner from "../components/ButtonSpinner";
 import logo from "../assets/your-logo.png";
 
@@ -72,9 +75,7 @@ export default function GenieDashboard() {
     try {
       // Use PATCH method for job acceptance with wallet validation
       const result = await api.patch(`/api/v1/jobs/${job.id}/accept`, {});
-      showToast(
-        `Job accepted! ₹${result.escrow_amount} moved to escrow.`,
-      );
+      showToast(`Job accepted! ₹${result.escrow_amount} moved to escrow.`);
       loadJobs();
     } catch (err) {
       // Handle specific error cases
@@ -97,15 +98,20 @@ export default function GenieDashboard() {
     try {
       await api.post(`/api/v1/jobs/${job.id}/start`, {});
       showToast(
-  <>
-    Job started! Good luck
-    <img
-      src={logo}
-      alt="Do4U"
-      style={{ width: '16px', height: '16px', verticalAlign: 'middle', marginLeft: '4px' }}
-    />
-  </>
-);
+        <>
+          Job started! Good luck
+          <img
+            src={logo}
+            alt="Do4U"
+            style={{
+              width: "16px",
+              height: "16px",
+              verticalAlign: "middle",
+              marginLeft: "4px",
+            }}
+          />
+        </>,
+      );
       loadJobs();
     } catch (err) {
       showToast(`Error: ${err.message}`);
@@ -210,7 +216,18 @@ export default function GenieDashboard() {
           <div>
             <h1 className="page__title">Genie Dashboard</h1>
             <p className="page__subtitle">
-              Hello, {user?.name || "Genie"} 🧞‍♂️ (Do4U <img src={logo} alt="Do4U" style={{width: '20px', height: '20px', verticalAlign: 'middle', marginLeft: '4px'}} />)
+              Hello, {user?.name || "Genie"} 🧞‍♂️ (Do4U{" "}
+              <img
+                src={logo}
+                alt="Do4U"
+                style={{
+                  width: "20px",
+                  height: "20px",
+                  verticalAlign: "middle",
+                  marginLeft: "4px",
+                }}
+              />
+              )
             </p>
           </div>
         </div>
@@ -227,6 +244,26 @@ export default function GenieDashboard() {
             </button>
           ))}
         </div>
+
+        <StatsSection
+          stats={[
+            {
+              label: "Available Jobs",
+              value: jobs.filter((j) => j.status !== "IN_PROGRESS").length,
+              sub: "Ready to accept",
+            },
+            {
+              label: "Active Assignments",
+              value: jobs.filter((j) => j.status === "IN_PROGRESS").length,
+              sub: "In progress",
+            },
+            {
+              label: "Completed",
+              value: jobs.filter((j) => j.status === "COMPLETED").length,
+              sub: "All finished",
+            },
+          ]}
+        />
 
         {/* Content */}
         {tab === "verification" ? (
@@ -290,9 +327,7 @@ export default function GenieDashboard() {
         ) : (
           <div className="job-grid" style={{ marginTop: 16 }}>
             {loading ? (
-              [...Array(4)].map((_, i) => (
-                <SkeletonCard key={i} />
-              ))
+              [...Array(4)].map((_, i) => <SkeletonCard key={i} />)
             ) : jobs.length > 0 ? (
               jobs.map((job) => {
                 const action = getAction(job);
@@ -314,20 +349,50 @@ export default function GenieDashboard() {
                   tab === "available"
                     ? "No available jobs"
                     : tab === "my-jobs"
-                    ? "No assignments yet"
-                    : "No verification data"
+                      ? "No assignments yet"
+                      : "No verification data"
                 }
                 message={
                   tab === "available"
                     ? "Check back soon — new jobs are posted regularly."
                     : tab === "my-jobs"
-                    ? "Accept a job to see it here."
-                    : "Complete your verification to start earning"
+                      ? "Accept a job to see it here."
+                      : "Complete your verification to start earning"
                 }
               />
             )}
           </div>
         )}
+
+        <TipsSection
+          title="💡 Tips for Success as a Genie"
+          tips={[
+            {
+              icon: "⚡",
+              title: "Complete Profile",
+              description:
+                "A complete profile with skills and verification increases your chances of getting hired",
+            },
+            {
+              icon: "⏱️",
+              title: "Quick Response",
+              description:
+                "Respond to job offers quickly — acceptances within 2 hours have higher success rates",
+            },
+            {
+              icon: "⭐",
+              title: "Quality Work",
+              description:
+                "Deliver excellent work and maintain high ratings to attract better job opportunities",
+            },
+            {
+              icon: "💬",
+              title: "Professional Communication",
+              description:
+                "Clear communication with job posters leads to better ratings and repeat business",
+            },
+          ]}
+        />
 
         {/* Mobile Bottom Navigation */}
         <nav className="mobile-nav">
@@ -367,6 +432,7 @@ export default function GenieDashboard() {
             </a>
           </div>
         </nav>
+        <Footer />
       </main>
 
       {rateUserJob && (

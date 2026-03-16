@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams, Link } from "react-router-dom";
 import { supabase } from "../services/supabaseClient";
 import { useAuth } from "../hooks/useAuth";
 import ButtonSpinner from "../components/ButtonSpinner";
+import Footer from "../components/Footer";
 import ParallaxBg from "../components/ParallaxBg";
 import logo from "../assets/your-logo.png";
 
@@ -348,6 +349,7 @@ export default function Login() {
           </Link>
         </p>
       </div>
+      <Footer />
     </div>
   );
 }

@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import { api } from "../services/api";
 import Navbar from "../components/Navbar";
+import StatsSection from "../components/StatsSection";
+import TipsSection from "../components/TipsSection";
+import Footer from "../components/Footer";
 import StatusBadge from "../components/StatusBadge";
 import Loader from "../components/Loader";
 import EmptyState from "../components/EmptyState";
@@ -157,8 +160,12 @@ export default function Admin() {
         }
 
         try {
-          const verificationData = await api.get("/api/v1/admin/verifications/pending");
-          setPendingVerifications(Array.isArray(verificationData) ? verificationData : []);
+          const verificationData = await api.get(
+            "/api/v1/admin/verifications/pending",
+          );
+          setPendingVerifications(
+            Array.isArray(verificationData) ? verificationData : [],
+          );
         } catch (verificationError) {
           setPendingVerifications([]);
           showToast(`Verification load failed: ${verificationError.message}`);
@@ -194,7 +201,9 @@ export default function Admin() {
     setVerificationUpdatingId(userId);
     try {
       await api.post(`/api/v1/admin/verifications/${userId}/${action}`, {});
-      setPendingVerifications((prev) => prev.filter((item) => item.user_id !== userId));
+      setPendingVerifications((prev) =>
+        prev.filter((item) => item.user_id !== userId),
+      );
       showToast(`Verification ${action}d successfully.`);
     } catch (err) {
       showToast(`Error: ${err.message}`);
@@ -207,8 +216,12 @@ export default function Admin() {
     const loadPendingVerifications = async () => {
       if (activeTab !== "verifications") return;
       try {
-        const verificationData = await api.get("/api/v1/admin/verifications/pending");
-        setPendingVerifications(Array.isArray(verificationData) ? verificationData : []);
+        const verificationData = await api.get(
+          "/api/v1/admin/verifications/pending",
+        );
+        setPendingVerifications(
+          Array.isArray(verificationData) ? verificationData : [],
+        );
       } catch (err) {
         showToast(`Verification load failed: ${err.message}`);
       }
@@ -393,7 +406,10 @@ export default function Admin() {
                   Pending Genie Verifications ({pendingVerifications.length})
                 </h2>
                 {pendingVerifications.length === 0 ? (
-                  <EmptyState icon="✅" title="No pending verification requests" />
+                  <EmptyState
+                    icon="✅"
+                    title="No pending verification requests"
+                  />
                 ) : (
                   <div className="admin-table-wrap">
                     <table className="admin-table">
@@ -409,7 +425,9 @@ export default function Admin() {
                       <tbody>
                         {pendingVerifications.map((item) => (
                           <tr key={item.user_id} className="admin-table__row">
-                            <td className="admin-table__cell">{item.name || "—"}</td>
+                            <td className="admin-table__cell">
+                              {item.name || "—"}
+                            </td>
                             <td className="admin-table__cell">
                               {item.document_path ? (
                                 <a
@@ -424,17 +442,26 @@ export default function Admin() {
                               )}
                             </td>
                             <td className="admin-table__cell">
-                              {Array.isArray(item.skills) && item.skills.length > 0
+                              {Array.isArray(item.skills) &&
+                              item.skills.length > 0
                                 ? item.skills.join(", ")
                                 : "—"}
                             </td>
                             <td className="admin-table__cell">
                               {(() => {
-                                const proofLinks = extractProofLinks(item.skill_proofs);
+                                const proofLinks = extractProofLinks(
+                                  item.skill_proofs,
+                                );
                                 if (proofLinks.length === 0) return "—";
 
                                 return (
-                                  <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                                  <div
+                                    style={{
+                                      display: "flex",
+                                      flexDirection: "column",
+                                      gap: 6,
+                                    }}
+                                  >
                                     {proofLinks.map((proofPath, index) => {
                                       const proofUrl = buildFileUrl(proofPath);
                                       if (!proofUrl) return null;
@@ -458,15 +485,29 @@ export default function Admin() {
                               <div className="admin-table__actions">
                                 <button
                                   className="btn btn--sm btn--primary"
-                                  onClick={() => handleVerificationAction(item.user_id, "approve")}
-                                  disabled={verificationUpdatingId === item.user_id}
+                                  onClick={() =>
+                                    handleVerificationAction(
+                                      item.user_id,
+                                      "approve",
+                                    )
+                                  }
+                                  disabled={
+                                    verificationUpdatingId === item.user_id
+                                  }
                                 >
                                   Approve
                                 </button>
                                 <button
                                   className="btn btn--sm"
-                                  onClick={() => handleVerificationAction(item.user_id, "reject")}
-                                  disabled={verificationUpdatingId === item.user_id}
+                                  onClick={() =>
+                                    handleVerificationAction(
+                                      item.user_id,
+                                      "reject",
+                                    )
+                                  }
+                                  disabled={
+                                    verificationUpdatingId === item.user_id
+                                  }
                                 >
                                   Reject
                                 </button>
@@ -482,6 +523,58 @@ export default function Admin() {
             )}
           </>
         )}
+
+        <StatsSection
+          stats={[
+            {
+              label: "Total Users",
+              value: dashboard?.total_users || 0,
+              sub: "All roles",
+            },
+            {
+              label: "Total Jobs",
+              value: dashboard?.total_jobs || 0,
+              sub: "All statuses",
+            },
+            {
+              label: "Pending Verifications",
+              value: dashboard?.pending_verifications_count || 0,
+              sub: "Awaiting review",
+            },
+          ]}
+        />
+
+        <TipsSection
+          title="💡 Admin Best Practices"
+          tips={[
+            {
+              icon: "🔍",
+              title: "Regular Audits",
+              description:
+                "Periodically review user reports and verify genie credentials to maintain platform trust",
+            },
+            {
+              icon: "⚡",
+              title: "Monitor Platform Health",
+              description:
+                "Check job completion rates, user ratings, and system performance to identify issues early",
+            },
+            {
+              icon: "🛡️",
+              title: "Enforce Safe Practices",
+              description:
+                "Ensure all transactions meet safety requirements and user data privacy is protected",
+            },
+            {
+              icon: "📊",
+              title: "Review Analytics",
+              description:
+                "Use the overview tab to track platform growth, user distribution, and job trends",
+            },
+          ]}
+        />
+
+        <Footer />
       </main>
 
       {toast && <div className="toast">{toast}</div>}
